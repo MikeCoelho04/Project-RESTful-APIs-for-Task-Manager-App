@@ -282,7 +282,7 @@ const updateTask = (req, res) => {
 
   const taskIndex = TASKS.findIndex(t => t.id == id)
 
-  if(taskIndex) {
+  if(taskIndex === -1) {
     res.status(400).json({
       status: 'FAILED',
       message: 'Task not found'
