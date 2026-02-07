@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/MikeCoelho04/Project-RESTful-APIs-for-Task-Manager-App#readme",
   "dependencies": {
+    "dotenv": "^17.2.4",
     "express": "^5.2.1"
   }
 }

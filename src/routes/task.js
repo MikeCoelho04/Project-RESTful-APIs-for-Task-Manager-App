@@ -4,13 +4,15 @@ const router = express.Router()
 
 const { getTasks, createTask, getTask, updateTask, deleteTask } = require('../controllers/task')
 
+const validateTask = require('../middlewares/validateTask')
+
 router.get('/', getTasks)
 
-router.post('/', createTask)
+router.post('/', validateTask, createTask)
 
 router.get('/:id', getTask)
 
-router.patch('/:id', updateTask)
+router.patch('/:id', validateTask, updateTask)
 
 router.delete('/:id', deleteTask)
 

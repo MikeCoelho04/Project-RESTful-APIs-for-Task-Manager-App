@@ -184,11 +184,45 @@ let TASKS = [
 let taskCounter = 16
 
 const getTasks = (req, res) => {
+
+  const { searchText, priority, sortBy, order, limit, status } = req.query
+
+  let tasks = TASKS
+
+  if(searchText) {
+    tasks = tasks.filter(t => t.title.includes(searchText))
+  }
+
+  if(priority) {
+    tasks = tasks.filter(t => t.priority == priority)
+  }
+
+  if(sortBy == 'dueDate') {
+
+    tasks = tasks.sort((a, b) => {
+      const dateA =  new Date(a.dueDate)
+      const dateB = new Date(b.dueDate)
+
+      return order == 'asc' ? dateB - dateA : dateA - dateB
+
+    })
+  }
+
+  if(limit) {
+    tasks = tasks.slice(0, Number(limit))
+  }
+
+  if(status) {
+    tasks = tasks.filter(t => t.status == status)
+  }
+
   res.json({
     status: 'OK',
     requestAt: new Date(),
-    data: TASKS,
+    limit: limit,
+    data: tasks,
   })
+
 }
 
 const createTask = (req, res) => { 
@@ -320,6 +354,7 @@ const deleteTask = (req, res) => {
 }
 
 module.exports = {
+  TASKS,
   getTasks,
   createTask,
   getTask,
